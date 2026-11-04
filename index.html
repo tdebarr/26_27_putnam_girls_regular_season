@@ -633,4 +633,74 @@
 
         function switchView(view) {
             appState.activeView = view;
-            ['Standings', 'Games
+            ['Standings', 'Games', 'Bracket', 'Teams'].forEach(v => {
+                const el = document.getElementById(`view${v}`);
+                const nav = document.getElementById(`nav${v}`);
+                if (v.toLowerCase() === view) {
+                    el.classList.remove('hidden');
+                    nav.className = "flex flex-col items-center gap-1 text-purple-400 font-bold";
+                } else {
+                    el.classList.add('hidden');
+                    nav.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-white";
+                }
+            });
+        }
+
+        function setWeek(w) {
+            appState.selectedWeek = w;
+            renderAll();
+        }
+
+        function openModal(id) {
+            if (id === 'addGameModal') updateGameTeamOptions();
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function updateGameTeamOptions() {
+            const homeSelect = document.getElementById('homeTeamSelect');
+            const awaySelect = document.getElementById('awayTeamSelect');
+            const optionsHTML = appState.teams.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+            homeSelect.innerHTML = optionsHTML;
+            awaySelect.innerHTML = optionsHTML;
+            if (appState.teams.length > 1) awaySelect.selectedIndex = 1;
+        }
+
+        function handleSaveGame(e) {
+            e.preventDefault();
+            const week = parseInt(document.getElementById('gameWeekInput').value, 10);
+            const homeId = document.getElementById('homeTeamSelect').value;
+            const awayId = document.getElementById('awayTeamSelect').value;
+            const homeScore = parseInt(document.getElementById('homeScoreInput').value, 10);
+            const awayScore = parseInt(document.getElementById('awayScoreInput').value, 10);
+
+            if (homeId === awayId) { alert('Select two different teams.'); return; }
+
+            appState.games.push({ id: 'g_' + Date.now(), week, homeId, awayId, homeScore, awayScore });
+            saveLocalStorage();
+            closeModal('addGameModal');
+            renderAll();
+            showToast("Game saved!");
+        }
+
+        function deleteGame(id) {
+            if (confirm('Delete score?')) {
+                appState.games = appState.games.filter(g => g.id !== id);
+                saveLocalStorage();
+                renderAll();
+                showToast("Game deleted.");
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('translate-y-[-20px]', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-[-20px]', 'opacity-0'), 2500);
+        }
+    </script>
+</body>
+</html>
