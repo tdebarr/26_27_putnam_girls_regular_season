@@ -92,15 +92,30 @@
             <!-- Populated via JS -->
         </div>
 
-        <!-- VIEW 1: STANDINGS -->
-        <section id="viewStandings" class="space-y-3">
-            <div class="flex items-center justify-between px-1">
-                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">League Standings</h2>
-                <span id="activeWeekBadge" class="text-[11px] font-semibold text-purple-400">All Weeks</span>
+        <!-- VIEW 1: STANDINGS + WEEKLY GAMES DISPLAY -->
+        <section id="viewStandings" class="space-y-4">
+            <!-- Standings Block -->
+            <div class="space-y-2.5">
+                <div class="flex items-center justify-between px-1">
+                    <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">League Standings</h2>
+                    <span id="activeWeekBadge" class="text-[11px] font-semibold text-purple-400">All Weeks</span>
+                </div>
+
+                <div id="standingsCards" class="space-y-2.5">
+                    <!-- Dynamically Populated Cards -->
+                </div>
             </div>
 
-            <div id="standingsCards" class="space-y-2.5">
-                <!-- Dynamically Populated Cards -->
+            <!-- Weekly Scores Block -->
+            <div class="space-y-2.5 pt-2 border-t border-brand-border/60">
+                <div class="flex items-center justify-between px-1">
+                    <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider" id="weeklyScoresHeader">Week Scores</h2>
+                    <span class="text-[10px] text-slate-500 font-medium">Recorded Results</span>
+                </div>
+
+                <div id="weeklyScoresList" class="space-y-2">
+                    <!-- Dynamically Populated Scores -->
+                </div>
             </div>
         </section>
 
@@ -455,6 +470,7 @@
         function renderAll() {
             renderWeekPills();
             renderStandingsCards();
+            renderWeeklyScoresSection();
             renderGamesList();
             renderTeamsGrid();
             renderTournamentBracket();
@@ -528,6 +544,57 @@
                                     ${team.streakText}
                                 </span>
                             </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderWeeklyScoresSection() {
+            const container = document.getElementById('weeklyScoresList');
+            const header = document.getElementById('weeklyScoresHeader');
+
+            let filteredGames = appState.games.filter(g => appState.selectedWeek === 'All' || g.week == appState.selectedWeek);
+            filteredGames.sort((a, b) => b.week - a.week);
+
+            header.textContent = appState.selectedWeek === 'All' ? 'All Season Scores' : `Week ${appState.selectedWeek} Scores`;
+
+            if (filteredGames.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-500 py-4 text-xs">No games recorded for this selection.</p>`;
+                return;
+            }
+
+            container.innerHTML = filteredGames.map(game => {
+                const home = appState.teams.find(t => t.id === game.homeId) || { name: 'Unknown', color: '#9333EA', textColor: '#FFFFFF' };
+                const away = appState.teams.find(t => t.id === game.awayId) || { name: 'Unknown', color: '#9333EA', textColor: '#FFFFFF' };
+
+                const homeWin = game.homeScore > game.awayScore;
+                const awayWin = game.awayScore > game.homeScore;
+
+                const homeDarker = adjustColorShade(home.color || '#9333EA', -25);
+                const awayDarker = adjustColorShade(away.color || '#9333EA', -25);
+
+                return `
+                    <div class="bg-brand-card p-3 rounded-xl border border-brand-border flex items-center justify-between text-xs">
+                        <span class="text-[10px] font-bold text-purple-400 bg-purple-950/60 border border-purple-800/40 px-2 py-0.5 rounded-md">W${game.week}</span>
+                        
+                        <div class="flex items-center gap-2 font-bold">
+                            <!-- Home Team Badge -->
+                            <span class="px-2 py-1 rounded-md text-[11px] font-bold shadow-sm" style="background: linear-gradient(135deg, ${home.color} 0%, ${homeDarker} 100%); color: ${home.textColor || '#FFFFFF'};">
+                                ${home.name}
+                            </span>
+
+                            <!-- Score Pill -->
+                            <span class="bg-brand-dark px-2.5 py-1 rounded-lg font-mono text-xs border border-brand-border">
+                                <span class="${homeWin ? 'text-emerald-400 font-extrabold' : 'text-slate-300'}">${game.homeScore}</span>
+                                <span class="text-slate-500 mx-1">-</span>
+                                <span class="${awayWin ? 'text-emerald-400 font-extrabold' : 'text-slate-300'}">${game.awayScore}</span>
+                            </span>
+
+                            <!-- Away Team Badge -->
+                            <span class="px-2 py-1 rounded-md text-[11px] font-bold shadow-sm" style="background: linear-gradient(135deg, ${away.color} 0%, ${awayDarker} 100%); color: ${away.textColor || '#FFFFFF'};">
+                                ${away.name}
+                            </span>
                         </div>
                     </div>
                 `;
