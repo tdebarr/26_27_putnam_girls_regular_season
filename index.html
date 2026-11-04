@@ -87,42 +87,27 @@
     <!-- MAIN CONTENT -->
     <main class="flex-grow max-w-md w-full mx-auto px-3 pt-4 space-y-4">
 
-        <!-- WEEK SCROLL FILTER -->
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar" id="weekTabs">
-            <!-- Populated via JS -->
-        </div>
-
-        <!-- VIEW 1: STANDINGS + WEEKLY GAMES DISPLAY -->
-        <section id="viewStandings" class="space-y-4">
-            <!-- Standings Block -->
-            <div class="space-y-2.5">
-                <div class="flex items-center justify-between px-1">
-                    <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">League Standings</h2>
-                    <span id="activeWeekBadge" class="text-[11px] font-semibold text-purple-400">All Weeks</span>
-                </div>
-
-                <div id="standingsCards" class="space-y-2.5">
-                    <!-- Dynamically Populated Cards -->
-                </div>
+        <!-- VIEW 1: STANDINGS ONLY (ALL GAMES ALWAYS) -->
+        <section id="viewStandings" class="space-y-3">
+            <div class="flex items-center justify-between px-1">
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Overall League Standings</h2>
+                <span class="text-[11px] font-semibold text-purple-400">All Games</span>
             </div>
 
-            <!-- Weekly Scores Block -->
-            <div class="space-y-2.5 pt-2 border-t border-brand-border/60">
-                <div class="flex items-center justify-between px-1">
-                    <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider" id="weeklyScoresHeader">Week Scores</h2>
-                    <span class="text-[10px] text-slate-500 font-medium">Recorded Results</span>
-                </div>
-
-                <div id="weeklyScoresList" class="space-y-2">
-                    <!-- Dynamically Populated Scores -->
-                </div>
+            <div id="standingsCards" class="space-y-2.5">
+                <!-- Dynamically Populated Cards -->
             </div>
         </section>
 
-        <!-- VIEW 2: GAME LOGS -->
+        <!-- VIEW 2: GAME LOGS WITH WEEK FILTERS -->
         <section id="viewGames" class="hidden space-y-3">
-            <div class="flex items-center justify-between px-1">
-                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Game History</h2>
+            <!-- WEEK SCROLL FILTER FOR GAMES VIEW -->
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar" id="weekTabs">
+                <!-- Populated via JS -->
+            </div>
+
+            <div class="flex items-center justify-between px-1 pt-1">
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider" id="gameLogsHeader">Game History</h2>
                 <button onclick="openModal('addGameModal')" class="text-xs text-purple-400 font-bold hover:underline flex items-center gap-1">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Game
                 </button>
@@ -413,8 +398,8 @@
                 };
             });
 
-            const filteredGames = appState.games.filter(g => appState.selectedWeek === 'All' || g.week == appState.selectedWeek);
-            const sortedGames = [...filteredGames].sort((a, b) => a.week - b.week);
+            // Standings ALWAYS calculate all games across the full season
+            const sortedGames = [...appState.games].sort((a, b) => a.week - b.week);
 
             sortedGames.forEach(game => {
                 const home = statsMap[game.homeId];
@@ -470,7 +455,6 @@
         function renderAll() {
             renderWeekPills();
             renderStandingsCards();
-            renderWeeklyScoresSection();
             renderGamesList();
             renderTeamsGrid();
             renderTournamentBracket();
@@ -491,9 +475,6 @@
                     </button>
                 `;
             }).join('');
-
-            document.getElementById('activeWeekBadge').textContent = 
-                appState.selectedWeek === 'All' ? 'All Weeks' : appState.selectedWeek === '9' ? 'Dec 18-20 Tournament' : `Week ${appState.selectedWeek}`;
         }
 
         function renderStandingsCards() {
@@ -524,7 +505,7 @@
                             </span>
                         </div>
 
-                        <!-- Stats Grid: W-L, PCT, DIFF, PF, PA, Streak -->
+                        <!-- Stats Grid: W-L, PCT, PF, PA, DIFF, Streak -->
                         <div class="flex items-center gap-3 text-right">
                             <div>
                                 <div class="text-xs font-extrabold text-white">${team.wins}-${team.losses}</div>
@@ -550,17 +531,17 @@
             }).join('');
         }
 
-        function renderWeeklyScoresSection() {
-            const container = document.getElementById('weeklyScoresList');
-            const header = document.getElementById('weeklyScoresHeader');
+        function renderGamesList() {
+            const container = document.getElementById('gamesList');
+            const header = document.getElementById('gameLogsHeader');
 
             let filteredGames = appState.games.filter(g => appState.selectedWeek === 'All' || g.week == appState.selectedWeek);
             filteredGames.sort((a, b) => b.week - a.week);
 
-            header.textContent = appState.selectedWeek === 'All' ? 'All Season Scores' : `Week ${appState.selectedWeek} Scores`;
+            header.textContent = appState.selectedWeek === 'All' ? 'All Match Results' : `Week ${appState.selectedWeek} Match Results`;
 
             if (filteredGames.length === 0) {
-                container.innerHTML = `<p class="text-center text-slate-500 py-4 text-xs">No games recorded for this selection.</p>`;
+                container.innerHTML = `<p class="text-center text-slate-500 py-6 text-xs">No games recorded for this filter.</p>`;
                 return;
             }
 
@@ -579,7 +560,7 @@
                         <span class="text-[10px] font-bold text-purple-400 bg-purple-950/60 border border-purple-800/40 px-2 py-0.5 rounded-md">W${game.week}</span>
                         
                         <div class="flex items-center gap-2 font-bold">
-                            <!-- Home Team Badge -->
+                            <!-- Home Team -->
                             <span class="px-2 py-1 rounded-md text-[11px] font-bold shadow-sm" style="background: linear-gradient(135deg, ${home.color} 0%, ${homeDarker} 100%); color: ${home.textColor || '#FFFFFF'};">
                                 ${home.name}
                             </span>
@@ -591,38 +572,12 @@
                                 <span class="${awayWin ? 'text-emerald-400 font-extrabold' : 'text-slate-300'}">${game.awayScore}</span>
                             </span>
 
-                            <!-- Away Team Badge -->
+                            <!-- Away Team -->
                             <span class="px-2 py-1 rounded-md text-[11px] font-bold shadow-sm" style="background: linear-gradient(135deg, ${away.color} 0%, ${awayDarker} 100%); color: ${away.textColor || '#FFFFFF'};">
                                 ${away.name}
                             </span>
                         </div>
-                    </div>
-                `;
-            }).join('');
-        }
 
-        function renderGamesList() {
-            const container = document.getElementById('gamesList');
-            let filteredGames = appState.games.filter(g => appState.selectedWeek === 'All' || g.week == appState.selectedWeek);
-            filteredGames.sort((a, b) => b.week - a.week);
-
-            if (filteredGames.length === 0) {
-                container.innerHTML = `<p class="text-center text-slate-500 py-6 text-xs">No games recorded yet.</p>`;
-                return;
-            }
-
-            container.innerHTML = filteredGames.map(game => {
-                const home = appState.teams.find(t => t.id === game.homeId) || { name: 'Unknown' };
-                const away = appState.teams.find(t => t.id === game.awayId) || { name: 'Unknown' };
-
-                return `
-                    <div class="bg-brand-card p-3 rounded-xl border border-brand-border flex items-center justify-between text-xs">
-                        <span class="text-[10px] font-bold text-purple-400 bg-purple-950/60 border border-purple-800/40 px-2 py-0.5 rounded-md">W${game.week}</span>
-                        <div class="flex items-center gap-2 font-bold text-white">
-                            <span>${home.name}</span>
-                            <span class="bg-brand-dark px-2.5 py-1 rounded-lg text-purple-300 font-mono">${game.homeScore} - ${game.awayScore}</span>
-                            <span>${away.name}</span>
-                        </div>
                         <button onclick="deleteGame('${game.id}')" class="text-slate-500 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                     </div>
                 `;
