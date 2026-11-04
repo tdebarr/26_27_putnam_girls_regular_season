@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2026/2027 Putnam 4th/5th Girls Regular Season</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,13 +20,15 @@
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
                     },
                     colors: {
-                        court: {
-                            navy: '#0F172A',
-                            dark: '#1E293B',
-                            accent: '#F97316',
-                            accentHover: '#EA580C',
-                            gold: '#F59E0B',
-                            bg: '#F8FAFC'
+                        brand: {
+                            black: '#09090B',
+                            dark: '#120F1D',
+                            card: '#181528',
+                            border: '#2E2A4A',
+                            purple: '#9333EA',
+                            purpleDark: '#6B21A8',
+                            purpleLight: '#C084FC',
+                            accent: '#A855F7'
                         }
                     }
                 }
@@ -34,423 +36,215 @@
         }
     </script>
     <style>
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white !important; color: black !important; }
-            .print-card { border: 1px solid #cbd5e1 !important; box-shadow: none !important; }
+        body {
+            background-color: #09090B;
+            color: #F4F4F5;
+            -webkit-tap-highlight-color: transparent;
         }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        .modal-backdrop { background-color: rgba(15, 23, 42, 0.65); backdrop-filter: blur(4px); }
+        .modal-backdrop {
+            background-color: rgba(9, 9, 11, 0.85);
+            backdrop-filter: blur(6px);
+        }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #09090B; }
+        ::-webkit-scrollbar-thumb { background: #2E2A4A; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-orange-500 selection:text-white">
+<body class="font-sans min-h-screen pb-24 flex flex-col selection:bg-purple-600 selection:text-white">
 
-    <!-- Header Navigation -->
-    <header class="bg-court-navy text-white sticky top-0 z-30 shadow-md no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-3">
-                    <div class="bg-gradient-to-tr from-orange-500 to-amber-400 p-2.5 rounded-2xl shadow-lg shadow-orange-500/20 text-white flex items-center justify-center">
-                        <i data-lucide="trophy" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white leading-tight">
-                            2026/2027 Putnam 4th/5th Girls
-                        </h1>
-                        <p class="text-xs text-orange-400 font-semibold flex items-center gap-1.5 mt-0.5">
-                            <span>Regular Season (Weeks 1–8)</span>
-                            <span class="text-slate-500">•</span>
-                            <span class="bg-orange-500/20 text-orange-300 px-2 py-0.5 rounded-md border border-orange-500/30">Week 9 Tournament: Dec 18–20</span>
-                        </p>
-                    </div>
+    <!-- TOP HEADER -->
+    <header class="sticky top-0 z-40 bg-brand-dark/95 backdrop-blur-md border-b border-brand-border px-4 py-3 shadow-lg">
+        <div class="max-w-md mx-auto flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-indigo-900 flex items-center justify-center text-white shadow-md shadow-purple-900/40">
+                    <i data-lucide="trophy" class="w-5 h-5"></i>
                 </div>
+                <div>
+                    <h1 class="text-sm font-extrabold text-white tracking-tight leading-none">Putnam 4th/5th Girls</h1>
+                    <p class="text-[11px] text-purple-400 font-medium mt-0.5">2026/2027 Regular Season</p>
+                </div>
+            </div>
 
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <button onclick="shareLeagueURL()" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-3 py-2 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-sm active:scale-95">
-                        <i data-lucide="share-2" class="w-4 h-4"></i>
-                        <span>Share League</span>
-                    </button>
-                    <button onclick="window.print()" class="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-3 py-2 rounded-xl text-xs sm:text-sm border border-slate-700 transition-all duration-200 active:scale-95">
-                        <i data-lucide="printer" class="w-4 h-4"></i>
-                        <span class="hidden sm:inline">Print / PDF</span>
-                    </button>
-                    <button onclick="openModal('addGameModal')" class="inline-flex items-center gap-1.5 bg-court-accent hover:bg-court-accentHover text-white font-semibold px-3 py-2 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-sm active:scale-95">
-                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                        <span>Record Game</span>
-                    </button>
-                </div>
+            <!-- Header Action Buttons -->
+            <div class="flex items-center gap-2">
+                <button onclick="openModal('addGameModal')" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 shadow-md shadow-purple-900/30 active:scale-95 transition-all">
+                    <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                    <span>Record Game</span>
+                </button>
+                <button onclick="shareLeagueURL()" class="bg-brand-card hover:bg-brand-border text-purple-300 border border-brand-border p-2 rounded-xl text-xs flex items-center justify-center active:scale-95 transition-all" title="Share League">
+                    <i data-lucide="share-2" class="w-4 h-4"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Printable Header (Visible only when printing) -->
-    <div class="hidden print:block p-6 text-center border-b border-slate-300 mb-4">
-        <h1 class="text-2xl font-bold">2026/2027 Putnam 4th/5th Girls Regular Season</h1>
-        <p class="text-sm text-slate-600 mt-1">Official League Standings & Tournament Schedule • Week 9 (Dec 18–20)</p>
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed top-16 left-1/2 transform -translate-x-1/2 z-50 translate-y-[-20px] opacity-0 transition-all duration-300 bg-purple-950 border border-purple-500/50 text-white px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2 text-xs font-semibold pointer-events-none">
+        <i data-lucide="check-circle" class="w-4 h-4 text-purple-400" id="toastIcon"></i>
+        <span id="toastMessage">State updated!</span>
     </div>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-700 no-print">
-        <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400" id="toastIcon"></i>
-        <span id="toastMessage" class="text-sm font-semibold">League state URL copied to clipboard!</span>
-    </div>
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-md w-full mx-auto px-3 pt-4 space-y-4">
 
-    <!-- Main Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-
-        <!-- Top Overview Cards & Controls -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 no-print">
-            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm flex items-center gap-4">
-                <div class="p-3 bg-orange-50 text-orange-600 rounded-xl">
-                    <i data-lucide="users" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider">League Teams</p>
-                    <p class="text-2xl font-bold text-slate-800" id="statTotalTeams">7</p>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm flex items-center gap-4">
-                <div class="p-3 bg-blue-50 text-blue-600 rounded-xl">
-                    <i data-lucide="calendar" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Games Completed</p>
-                    <p class="text-2xl font-bold text-slate-800" id="statGamesPlayed">10</p>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm flex items-center gap-4">
-                <div class="p-3 bg-amber-50 text-amber-600 rounded-xl">
-                    <i data-lucide="award" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider">#1 Seed Leader</p>
-                    <p class="text-lg font-bold text-slate-800 truncate max-w-[150px]" id="statTopTeam">Valks</p>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm flex items-center justify-between gap-2">
-                <div>
-                    <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Backup & Reset</p>
-                    <p class="text-xs text-slate-500">JSON & Demo Sync</p>
-                </div>
-                <div class="flex items-center gap-1">
-                    <button onclick="exportJSON()" class="p-2 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Export Data JSON">
-                        <i data-lucide="download" class="w-5 h-5"></i>
-                    </button>
-                    <label class="p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer" title="Import Data JSON">
-                        <i data-lucide="upload" class="w-5 h-5"></i>
-                        <input type="file" accept=".json" class="hidden" onchange="importJSON(event)">
-                    </label>
-                    <button onclick="loadDemoData()" class="p-2 text-slate-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors" title="Reload Weeks 1 & 2">
-                        <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </div>
+        <!-- WEEK SCROLL FILTER -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar" id="weekTabs">
+            <!-- Populated via JS -->
         </div>
 
-        <!-- Section Switcher Tabs & Filters -->
-        <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between no-print">
-            <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl w-full sm:w-auto overflow-x-auto" id="weekTabs">
-                <!-- Dynamic Week Filters (Weeks 1 to 8 + Tournament) -->
+        <!-- VIEW 1: STANDINGS -->
+        <section id="viewStandings" class="space-y-3">
+            <div class="flex items-center justify-between px-1">
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">League Standings</h2>
+                <span id="activeWeekBadge" class="text-[11px] font-semibold text-purple-400">All Weeks</span>
             </div>
 
-            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-                <div class="inline-flex rounded-xl bg-slate-100 p-1 text-sm font-medium">
-                    <button id="viewStandingsBtn" onclick="switchView('standings')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white shadow-sm text-slate-800 font-semibold transition-all">
-                        <i data-lucide="table" class="w-4 h-4"></i> Standings
-                    </button>
-                    <button id="viewGamesBtn" onclick="switchView('games')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all">
-                        <i data-lucide="history" class="w-4 h-4"></i> Game Logs
-                    </button>
-                    <button id="viewBracketBtn" onclick="switchView('bracket')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all">
-                        <i data-lucide="git-branch" class="w-4 h-4"></i> Tournament (Dec 18–20)
-                    </button>
-                    <button id="viewTeamsBtn" onclick="switchView('teams')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all">
-                        <i data-lucide="shield" class="w-4 h-4"></i> Teams
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW 1: STANDINGS TABLE -->
-        <section id="viewStandings" class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden print-card">
-            <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between flex-wrap gap-2">
-                <div class="flex items-center gap-2">
-                    <h2 class="text-lg font-bold text-slate-800">Regular Season Standings</h2>
-                    <span id="activeWeekBadge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">All Regular Season Games</span>
-                </div>
-                <button onclick="shareLeagueURL()" class="text-xs text-emerald-600 font-semibold hover:underline flex items-center gap-1 no-print">
-                    <i data-lucide="link" class="w-3.5 h-3.5"></i> Copy Shareable URL
-                </button>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm">
-                    <thead class="bg-slate-50/80 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
-                        <tr>
-                            <th scope="col" class="py-3.5 px-4 text-center">Seed</th>
-                            <th scope="col" class="py-3.5 px-4 cursor-pointer hover:text-slate-800" onclick="setSort('name')">
-                                Team Name <i data-lucide="arrow-up-down" class="inline w-3 h-3 ml-1"></i>
-                            </th>
-                            <th scope="col" class="py-3.5 px-3 text-center cursor-pointer hover:text-slate-800" onclick="setSort('wins')">W</th>
-                            <th scope="col" class="py-3.5 px-3 text-center cursor-pointer hover:text-slate-800" onclick="setSort('losses')">L</th>
-                            <th scope="col" class="py-3.5 px-3 text-center cursor-pointer hover:text-slate-800 font-bold text-slate-700" onclick="setSort('winPct')">
-                                PCT <i data-lucide="arrow-up-down" class="inline w-3 h-3 ml-0.5"></i>
-                            </th>
-                            <th scope="col" class="py-3.5 px-3 text-center cursor-pointer hover:text-slate-800" onclick="setSort('pf')">PTS</th>
-                            <th scope="col" class="py-3.5 px-3 text-center cursor-pointer hover:text-slate-800" onclick="setSort('pa')">OPP</th>
-                            <th scope="col" class="py-3.5 px-3 text-center cursor-pointer hover:text-slate-800" onclick="setSort('diff')">
-                                DIFF <i data-lucide="arrow-up-down" class="inline w-3 h-3 ml-0.5"></i>
-                            </th>
-                            <th scope="col" class="py-3.5 px-4 text-center">Streak</th>
-                        </tr>
-                    </thead>
-                    <tbody id="standingsTableBody" class="divide-y divide-slate-100 font-medium">
-                        <!-- Dynamically populated -->
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="emptyStandingsState" class="hidden p-12 text-center">
-                <p class="text-sm text-slate-500">No standings data found for this week filter.</p>
+            <div id="standingsCards" class="space-y-2.5">
+                <!-- Dynamically Populated Cards -->
             </div>
         </section>
 
-        <!-- VIEW 2: GAME LOG / HISTORY -->
-        <section id="viewGames" class="hidden bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden print-card">
-            <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
+        <!-- VIEW 2: GAME LOGS -->
+        <section id="viewGames" class="hidden space-y-3">
+            <div class="flex items-center justify-between px-1">
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Game History</h2>
+                <button onclick="openModal('addGameModal')" class="text-xs text-purple-400 font-bold hover:underline flex items-center gap-1">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add Game
+                </button>
+            </div>
+
+            <div id="gamesList" class="space-y-2">
+                <!-- Dynamically Populated Game Cards -->
+            </div>
+        </section>
+
+        <!-- VIEW 3: TOURNAMENT BRACKET -->
+        <section id="viewBracket" class="hidden space-y-4">
+            <div class="bg-brand-card p-4 rounded-2xl border border-brand-border flex items-center justify-between">
                 <div>
-                    <h2 class="text-lg font-bold text-slate-800">Regular Season Match Logs</h2>
-                    <p class="text-xs text-slate-500">Logged scores for Weeks 1 to 8</p>
+                    <span class="bg-purple-900/50 text-purple-300 border border-purple-700/50 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase">Week 9</span>
+                    <h2 class="text-sm font-bold text-white mt-1">Tournament (Dec 18–20)</h2>
                 </div>
-                <button onclick="openModal('addGameModal')" class="bg-court-accent hover:bg-court-accentHover text-white px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 no-print">
-                    <i data-lucide="plus" class="w-4 h-4"></i> Add Game Score
+                <button onclick="reseedTournament()" class="bg-purple-900/40 hover:bg-purple-800/40 text-purple-300 border border-purple-700/40 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5">
+                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Reseed
                 </button>
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm">
-                    <thead class="bg-slate-50/80 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
-                        <tr>
-                            <th class="py-3 px-4">Week</th>
-                            <th class="py-3 px-4">Home Team</th>
-                            <th class="py-3 px-4 text-center">Score</th>
-                            <th class="py-3 px-4">Away Team</th>
-                            <th class="py-3 px-4 text-right no-print">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="gamesTableBody" class="divide-y divide-slate-100">
-                        <!-- Dynamically populated -->
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="emptyGamesState" class="hidden p-12 text-center">
-                <p class="text-sm text-slate-500">No games recorded yet for this week.</p>
-            </div>
-        </section>
-
-        <!-- VIEW 3: WEEK 9 TOURNAMENT BRACKET (DEC 18-20) -->
-        <section id="viewBracket" class="hidden space-y-6">
-            <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider">Week 9 Postseason</span>
-                        <h2 class="text-xl font-bold text-slate-900">Tournament Bracket (Dec 18–20)</h2>
+            <div id="bracketContainer" class="space-y-4">
+                <!-- Round 1 -->
+                <div class="space-y-2">
+                    <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">Round 1 (Quarterfinals)</h3>
+                    <div class="bg-brand-card p-3 rounded-xl border border-brand-border text-xs flex justify-between items-center">
+                        <span class="text-slate-400">Match A</span>
+                        <span class="font-bold text-purple-300" id="b1_t1">#1 Seed (Bye)</span>
                     </div>
-                    <p class="text-xs text-slate-500 mt-1">Seeded automatically from Regular Season Standings. 1st Seed earns a Round 1 Bye.</p>
+                    <div class="bg-brand-card p-3 rounded-xl border border-brand-border space-y-2 text-xs">
+                        <span class="text-slate-400 text-[10px] block">Match B (4 vs 5)</span>
+                        <div class="flex justify-between items-center"><span font-bold id="b1_mB_h_name">#4</span><input type="number" id="b1_mB_h_score" onchange="updateBracketScore('mB', 'home', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                        <div class="flex justify-between items-center"><span font-bold id="b1_mB_a_name">#5</span><input type="number" id="b1_mB_a_score" onchange="updateBracketScore('mB', 'away', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                    </div>
+                    <div class="bg-brand-card p-3 rounded-xl border border-brand-border space-y-2 text-xs">
+                        <span class="text-slate-400 text-[10px] block">Match C (2 vs 7)</span>
+                        <div class="flex justify-between items-center"><span font-bold id="b1_mC_h_name">#2</span><input type="number" id="b1_mC_h_score" onchange="updateBracketScore('mC', 'home', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                        <div class="flex justify-between items-center"><span font-bold id="b1_mC_a_name">#7</span><input type="number" id="b1_mC_a_score" onchange="updateBracketScore('mC', 'away', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                    </div>
+                    <div class="bg-brand-card p-3 rounded-xl border border-brand-border space-y-2 text-xs">
+                        <span class="text-slate-400 text-[10px] block">Match D (3 vs 6)</span>
+                        <div class="flex justify-between items-center"><span font-bold id="b1_mD_h_name">#3</span><input type="number" id="b1_mD_h_score" onchange="updateBracketScore('mD', 'home', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                        <div class="flex justify-between items-center"><span font-bold id="b1_mD_a_name">#6</span><input type="number" id="b1_mD_a_score" onchange="updateBracketScore('mD', 'away', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                    </div>
                 </div>
-                <button onclick="reseedTournament()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 no-print">
-                    <i data-lucide="refresh-cw" class="w-4 h-4"></i> Sync/Reseed From Standings
-                </button>
-            </div>
 
-            <!-- Bracket Grid -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm overflow-x-auto print-card">
-                <div class="min-w-[760px] grid grid-cols-3 gap-6 relative">
-                    
-                    <!-- Round 1: Quarterfinals -->
-                    <div class="space-y-6">
-                        <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 border-b pb-2">Round 1 (Quarterfinals)</h3>
-                        
-                        <!-- Seed 1 BYE -->
-                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs">
-                            <span class="text-slate-400 font-bold block mb-1">Match A • #1 Seed Bye</span>
-                            <div id="b1_t1" class="font-bold text-slate-800">#1 Seed</div>
-                        </div>
+                <!-- Round 2 -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">Semifinals</h3>
+                    <div class="bg-brand-card p-3 rounded-xl border border-brand-border space-y-2 text-xs">
+                        <span class="text-slate-400 text-[10px] block">Semifinal 1</span>
+                        <div class="flex justify-between items-center"><span font-bold id="b2_sf1_h_name">#1 Seed</span><input type="number" id="b2_sf1_h_score" onchange="updateBracketScore('sf1', 'home', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                        <div class="flex justify-between items-center"><span font-bold id="b2_sf1_a_name">Winner B</span><input type="number" id="b2_sf1_a_score" onchange="updateBracketScore('sf1', 'away', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                    </div>
+                    <div class="bg-brand-card p-3 rounded-xl border border-brand-border space-y-2 text-xs">
+                        <span class="text-slate-400 text-[10px] block">Semifinal 2</span>
+                        <div class="flex justify-between items-center"><span font-bold id="b2_sf2_h_name">Winner C</span><input type="number" id="b2_sf2_h_score" onchange="updateBracketScore('sf2', 'home', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                        <div class="flex justify-between items-center"><span font-bold id="b2_sf2_a_name">Winner D</span><input type="number" id="b2_sf2_a_score" onchange="updateBracketScore('sf2', 'away', this.value)" class="w-10 bg-brand-dark border border-brand-border rounded p-1 text-center font-bold text-white"></div>
+                    </div>
+                </div>
 
-                        <!-- QF Game 1: 4 vs 5 -->
-                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2 text-xs">
-                            <span class="text-slate-400 font-bold block">Match B (4 vs 5)</span>
-                            <div class="flex items-center justify-between" id="b1_mB_h">
-                                <span class="font-bold text-slate-800" id="b1_mB_h_name">#4 Seed</span>
-                                <input type="number" id="b1_mB_h_score" min="0" placeholder="0" onchange="updateBracketScore('mB', 'home', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
-                            <div class="flex items-center justify-between" id="b1_mB_a">
-                                <span class="font-bold text-slate-800" id="b1_mB_a_name">#5 Seed</span>
-                                <input type="number" id="b1_mB_a_score" min="0" placeholder="0" onchange="updateBracketScore('mB', 'away', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
-                        </div>
-
-                        <!-- QF Game 2: 2 vs 7 -->
-                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2 text-xs">
-                            <span class="text-slate-400 font-bold block">Match C (2 vs 7)</span>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800" id="b1_mC_h_name">#2 Seed</span>
-                                <input type="number" id="b1_mC_h_score" min="0" placeholder="0" onchange="updateBracketScore('mC', 'home', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800" id="b1_mC_a_name">#7 Seed</span>
-                                <input type="number" id="b1_mC_a_score" min="0" placeholder="0" onchange="updateBracketScore('mC', 'away', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
-                        </div>
-
-                        <!-- QF Game 3: 3 vs 6 -->
-                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2 text-xs">
-                            <span class="text-slate-400 font-bold block">Match D (3 vs 6)</span>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800" id="b1_mD_h_name">#3 Seed</span>
-                                <input type="number" id="b1_mD_h_score" min="0" placeholder="0" onchange="updateBracketScore('mD', 'home', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800" id="b1_mD_a_name">#6 Seed</span>
-                                <input type="number" id="b1_mD_a_score" min="0" placeholder="0" onchange="updateBracketScore('mD', 'away', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
+                <!-- Finals -->
+                <div class="space-y-2 pt-2">
+                    <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">Championship</h3>
+                    <div class="bg-gradient-to-br from-purple-950/60 to-black p-4 rounded-xl border border-purple-600/40 space-y-3 text-xs">
+                        <div class="flex justify-between items-center"><span class="font-bold text-white text-sm" id="b3_f_h_name">Finalist 1</span><input type="number" id="b3_f_h_score" onchange="updateBracketScore('f', 'home', this.value)" class="w-10 bg-brand-dark border border-purple-500 rounded p-1 text-center font-bold text-white"></div>
+                        <div class="flex justify-between items-center"><span class="font-bold text-white text-sm" id="b3_f_a_name">Finalist 2</span><input type="number" id="b3_f_a_score" onchange="updateBracketScore('f', 'away', this.value)" class="w-10 bg-brand-dark border border-purple-500 rounded p-1 text-center font-bold text-white"></div>
+                        <div class="pt-2 border-t border-purple-800/40 text-center">
+                            <span class="text-[10px] font-bold text-purple-400 uppercase block">Champion</span>
+                            <span class="text-base font-extrabold text-white block mt-0.5" id="championName">TBD</span>
                         </div>
                     </div>
-
-                    <!-- Round 2: Semifinals -->
-                    <div class="space-y-12 pt-8">
-                        <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 border-b pb-2">Semifinals</h3>
-                        
-                        <!-- Semi 1 -->
-                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2 text-xs">
-                            <span class="text-slate-400 font-bold block">Semifinal 1</span>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800" id="b2_sf1_h_name">Winner Match A (#1)</span>
-                                <input type="number" id="b2_sf1_h_score" min="0" placeholder="0" onchange="updateBracketScore('sf1', 'home', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800" id="b2_sf1_a_name">Winner Match B</span>
-                                <input type="number" id="b2_sf1_a_score" min="0" placeholder="0" onchange="updateBracketScore('sf1', 'away', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
-                        </div>
-
-                        <!-- Semi 2 -->
-                        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm space-y-2 text-xs">
-                            <span class="text-slate-400 font-bold block">Semifinal 2</span>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800" id="b2_sf2_h_name">Winner Match C</span>
-                                <input type="number" id="b2_sf2_h_score" min="0" placeholder="0" onchange="updateBracketScore('sf2', 'home', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-800" id="b2_sf2_a_name">Winner Match D</span>
-                                <input type="number" id="b2_sf2_a_score" min="0" placeholder="0" onchange="updateBracketScore('sf2', 'away', this.value)" class="w-12 text-center bg-slate-100 rounded border p-1 font-bold no-print">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Round 3: Championship -->
-                    <div class="space-y-16 pt-16">
-                        <h3 class="text-xs font-extrabold uppercase tracking-wider text-amber-500 border-b border-amber-200 pb-2 flex items-center gap-1">
-                            <i data-lucide="crown" class="w-3.5 h-3.5"></i> Championship Game
-                        </h3>
-                        
-                        <div class="p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl border border-amber-200 shadow-md space-y-3 text-xs">
-                            <span class="text-amber-700 font-extrabold uppercase tracking-wider block">Dec 20 Finals</span>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-900 text-sm" id="b3_f_h_name">Finalist 1</span>
-                                <input type="number" id="b3_f_h_score" min="0" placeholder="0" onchange="updateBracketScore('f', 'home', this.value)" class="w-12 text-center bg-white rounded border border-amber-300 p-1 font-bold no-print">
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="font-bold text-slate-900 text-sm" id="b3_f_a_name">Finalist 2</span>
-                                <input type="number" id="b3_f_a_score" min="0" placeholder="0" onchange="updateBracketScore('f', 'away', this.value)" class="w-12 text-center bg-white rounded border border-amber-300 p-1 font-bold no-print">
-                            </div>
-
-                            <div class="pt-2 border-t border-amber-200/60 text-center">
-                                <span class="text-[10px] uppercase font-extrabold text-amber-600 block">Tournament Champion</span>
-                                <span class="text-base font-extrabold text-slate-900 block mt-0.5" id="championName">TBD</span>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- VIEW 4: TEAMS LIST -->
-        <section id="viewTeams" class="hidden space-y-4">
-            <div class="flex items-center justify-between">
-                <h2 class="text-lg font-bold text-slate-800">League Teams & Single-Color Gradients</h2>
-                <button onclick="openModal('addTeamModal')" class="bg-court-navy hover:bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 no-print">
-                    <i data-lucide="plus" class="w-4 h-4"></i> Add New Team
-                </button>
-            </div>
-
-            <div id="teamsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Dynamic Team Cards -->
+        <!-- VIEW 4: TEAMS -->
+        <section id="viewTeams" class="hidden space-y-3">
+            <div id="teamsGrid" class="grid grid-cols-1 gap-2.5">
+                <!-- Dynamically Populated Team Cards -->
             </div>
         </section>
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 mt-12 py-6 no-print">
-        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p>© 2026/2027 Putnam 4th/5th Girls Regular Season • Encoded URL & Local Storage Enabled</p>
-            <div class="flex items-center gap-4">
-                <button onclick="shareLeagueURL()" class="text-emerald-600 font-bold hover:underline inline-flex items-center gap-1">
-                    <i data-lucide="share-2" class="w-3.5 h-3.5"></i> Share League Link
+    <!-- FIXED BOTTOM BAR -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-brand-dark/95 backdrop-blur-md border-t border-brand-border px-4 py-2">
+        <div class="max-w-md mx-auto grid grid-cols-5 items-center text-center">
+            
+            <button onclick="switchView('standings')" id="navStandings" class="flex flex-col items-center gap-1 text-purple-400 font-bold">
+                <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+                <span class="text-[10px]">Ranks</span>
+            </button>
+
+            <button onclick="switchView('games')" id="navGames" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white">
+                <i data-lucide="calendar" class="w-5 h-5"></i>
+                <span class="text-[10px]">Games</span>
+            </button>
+
+            <!-- Bottom Record Game Button -->
+            <button onclick="openModal('addGameModal')" class="flex flex-col items-center justify-center -mt-5">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-purple-900/60 ring-4 ring-brand-black active:scale-90 transition-all">
+                    <i data-lucide="plus" class="w-6 h-6"></i>
+                </div>
+                <span class="text-[10px] font-bold text-purple-300 mt-0.5">Record</span>
+            </button>
+
+            <button onclick="switchView('bracket')" id="navBracket" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white">
+                <i data-lucide="git-branch" class="w-5 h-5"></i>
+                <span class="text-[10px]">Bracket</span>
+            </button>
+
+            <button onclick="switchView('teams')" id="navTeams" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white">
+                <i data-lucide="shield" class="w-5 h-5"></i>
+                <span class="text-[10px]">Teams</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- RECORD GAME MODAL SHEET -->
+    <div id="addGameModal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-brand-card rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 border border-brand-border shadow-2xl relative space-y-4">
+            <div class="flex items-center justify-between border-b border-brand-border pb-3">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i data-lucide="plus-circle" class="w-5 h-5 text-purple-400"></i> Record Match Score
+                </h3>
+                <button onclick="closeModal('addGameModal')" class="text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-        </div>
-    </footer>
-
-    <!-- MODALS -->
-    <!-- ADD / EDIT TEAM MODAL -->
-    <div id="addTeamModal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4 no-print">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 relative">
-            <button onclick="closeModal('addTeamModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            <h3 id="teamModalTitle" class="text-lg font-bold text-slate-800 mb-4">Add Team</h3>
-
-            <form id="teamForm" onsubmit="handleSaveTeam(event)" class="space-y-4">
-                <input type="hidden" id="editTeamId" value="">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Team Name</label>
-                    <input type="text" id="teamNameInput" required class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Single Color Base</label>
-                    <input type="color" id="teamColorInput" value="#9333EA" class="h-10 w-full rounded-xl border border-slate-200 p-1">
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeModal('addTeamModal')" class="px-4 py-2 text-xs font-semibold text-slate-600">Cancel</button>
-                    <button type="submit" class="px-5 py-2 text-xs font-semibold bg-court-accent text-white rounded-xl">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ADD / EDIT GAME MODAL -->
-    <div id="addGameModal" class="fixed inset-0 z-50 hidden modal-backdrop flex items-center justify-center p-4 no-print">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 relative">
-            <button onclick="closeModal('addGameModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            <h3 id="gameModalTitle" class="text-lg font-bold text-slate-800 mb-4">Record Match Score</h3>
 
             <form id="gameForm" onsubmit="handleSaveGame(event)" class="space-y-4">
                 <input type="hidden" id="editGameId" value="">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Week Select</label>
-                    <select id="gameWeekInput" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800">
+                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Select Week</label>
+                    <select id="gameWeekInput" class="w-full px-3 py-2 bg-brand-dark border border-brand-border rounded-xl text-sm font-semibold text-white focus:ring-2 focus:ring-purple-500 outline-none">
                         <option value="1">Week 1</option>
                         <option value="2">Week 2</option>
                         <option value="3">Week 3</option>
@@ -462,35 +256,35 @@
                     </select>
                 </div>
 
-                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-                    <div class="flex items-center gap-3">
+                <div class="bg-brand-dark p-3.5 rounded-2xl border border-brand-border space-y-3">
+                    <div class="flex items-center gap-2">
                         <div class="flex-grow">
-                            <label class="block text-xs font-bold text-slate-600 mb-1">Home Team</label>
-                            <select id="homeTeamSelect" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-800"></select>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Home Team</label>
+                            <select id="homeTeamSelect" required class="w-full px-3 py-2 bg-brand-card border border-brand-border rounded-xl text-sm font-bold text-white outline-none"></select>
                         </div>
                         <div class="w-20">
-                            <label class="block text-xs font-bold text-slate-600 mb-1 text-center">Score</label>
-                            <input type="number" id="homeScoreInput" min="0" required placeholder="0" class="w-full text-center px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold text-orange-600">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1 text-center">Score</label>
+                            <input type="number" id="homeScoreInput" min="0" required placeholder="0" class="w-full text-center px-3 py-2 bg-brand-card border border-purple-500/50 rounded-xl font-extrabold text-purple-300 text-base outline-none">
                         </div>
                     </div>
 
-                    <div class="text-center text-xs font-bold text-slate-400 uppercase">VS</div>
+                    <div class="text-center text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">VS</div>
 
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2">
                         <div class="flex-grow">
-                            <label class="block text-xs font-bold text-slate-600 mb-1">Away Team</label>
-                            <select id="awayTeamSelect" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-800"></select>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Away Team</label>
+                            <select id="awayTeamSelect" required class="w-full px-3 py-2 bg-brand-card border border-brand-border rounded-xl text-sm font-bold text-white outline-none"></select>
                         </div>
                         <div class="w-20">
-                            <label class="block text-xs font-bold text-slate-600 mb-1 text-center">Score</label>
-                            <input type="number" id="awayScoreInput" min="0" required placeholder="0" class="w-full text-center px-3 py-2 bg-white border border-slate-200 rounded-xl font-bold text-orange-600">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1 text-center">Score</label>
+                            <input type="number" id="awayScoreInput" min="0" required placeholder="0" class="w-full text-center px-3 py-2 bg-brand-card border border-purple-500/50 rounded-xl font-extrabold text-purple-300 text-base outline-none">
                         </div>
                     </div>
                 </div>
 
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeModal('addGameModal')" class="px-4 py-2 text-xs font-semibold text-slate-600">Cancel</button>
-                    <button type="submit" class="px-5 py-2 text-xs font-semibold bg-court-accent text-white rounded-xl">Save Game</button>
+                <div class="flex justify-end gap-2 pt-1">
+                    <button type="button" onclick="closeModal('addGameModal')" class="px-4 py-2 text-xs font-semibold text-slate-400">Cancel</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-bold bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl shadow-lg shadow-purple-900/50">Save Match</button>
                 </div>
             </form>
         </div>
@@ -498,7 +292,6 @@
 
     <!-- SCRIPT LOGIC -->
     <script>
-        // Single color shade generator
         function adjustColorShade(hex, percent) {
             let num = parseInt(hex.replace('#', ''), 16),
                 amt = Math.round(2.55 * percent),
@@ -509,29 +302,26 @@
         }
 
         const DEFAULT_TEAMS = [
-            { id: 't1', name: 'Valks', color: '#9333EA', textColor: '#FFFFFF' },    // Pure Purple
-            { id: 't2', name: 'Wings', color: '#2563EB', textColor: '#FFFFFF' },    // Pure Royal Blue
-            { id: 't3', name: 'Fever', color: '#EF4444', textColor: '#FFFFFF' },    // Pure Red
-            { id: 't4', name: 'Liberty', color: '#2DD4BF', textColor: '#09090B' },  // Pure Mint Green
-            { id: 't5', name: 'Fire', color: '#EC4899', textColor: '#FFFFFF' },     // Pure Pink
-            { id: 't6', name: 'Sky', color: '#38BDF8', textColor: '#09090B' },      // Pure Baby Blue
-            { id: 't7', name: 'Aces', color: '#27272A', textColor: '#FFFFFF' }      // Pure Charcoal/Black
+            { id: 't1', name: 'Valks', color: '#9333EA', textColor: '#FFFFFF' },
+            { id: 't2', name: 'Wings', color: '#2563EB', textColor: '#FFFFFF' },
+            { id: 't3', name: 'Fever', color: '#EF4444', textColor: '#FFFFFF' },
+            { id: 't4', name: 'Liberty', color: '#2DD4BF', textColor: '#09090B' },
+            { id: 't5', name: 'Fire', color: '#EC4899', textColor: '#FFFFFF' },
+            { id: 't6', name: 'Sky', color: '#38BDF8', textColor: '#09090B' },
+            { id: 't7', name: 'Aces', color: '#27272A', textColor: '#FFFFFF' }
         ];
 
         const DEFAULT_GAMES = [
-            // Week 1
-            { id: 'g1', week: 1, homeId: 't1', homeScore: 14, awayId: 't2', awayScore: 4 },  // Valks 14 / Wings 4
-            { id: 'g2', week: 1, homeId: 't3', homeScore: 14, awayId: 't4', awayScore: 12 }, // Fever 14 / Liberty 12
-            { id: 'g3', week: 1, homeId: 't5', homeScore: 26, awayId: 't6', awayScore: 24 }, // Fire 26 / Sky 24
-            { id: 'g4', week: 1, homeId: 't3', homeScore: 27, awayId: 't6', awayScore: 11 }, // Fever 27 / Sky 11
-            { id: 'g5', week: 1, homeId: 't7', homeScore: 16, awayId: 't2', awayScore: 13 }, // Aces 16 / Wings 13
-
-            // Week 2
-            { id: 'g6', week: 2, homeId: 't5', homeScore: 15, awayId: 't2', awayScore: 13 }, // Fire 15 / Wings 13
-            { id: 'g7', week: 2, homeId: 't1', homeScore: 23, awayId: 't4', awayScore: 13 }, // Valks 23 / Liberty 13
-            { id: 'g8', week: 2, homeId: 't4', homeScore: 19, awayId: 't5', awayScore: 14 }, // Liberty 19 / Fire 14
-            { id: 'g9', week: 2, homeId: 't6', homeScore: 30, awayId: 't2', awayScore: 12 }, // Sky 30 / Wings 12
-            { id: 'g10', week: 2, homeId: 't7', homeScore: 15, awayId: 't3', awayScore: 12 } // Aces 15 / Fever 12
+            { id: 'g1', week: 1, homeId: 't1', homeScore: 14, awayId: 't2', awayScore: 4 },
+            { id: 'g2', week: 1, homeId: 't3', homeScore: 14, awayId: 't4', awayScore: 12 },
+            { id: 'g3', week: 1, homeId: 't5', homeScore: 26, awayId: 't6', awayScore: 24 },
+            { id: 'g4', week: 1, homeId: 't3', homeScore: 27, awayId: 't6', awayScore: 11 },
+            { id: 'g5', week: 1, homeId: 't7', homeScore: 16, awayId: 't2', awayScore: 13 },
+            { id: 'g6', week: 2, homeId: 't5', homeScore: 15, awayId: 't2', awayScore: 13 },
+            { id: 'g7', week: 2, homeId: 't1', homeScore: 23, awayId: 't4', awayScore: 13 },
+            { id: 'g8', week: 2, homeId: 't4', homeScore: 19, awayId: 't5', awayScore: 14 },
+            { id: 'g9', week: 2, homeId: 't6', homeScore: 30, awayId: 't2', awayScore: 12 },
+            { id: 'g10', week: 2, homeId: 't7', homeScore: 15, awayId: 't3', awayScore: 12 }
         ];
 
         let appState = {
@@ -539,9 +329,7 @@
             games: [],
             bracketScores: {},
             selectedWeek: 'All',
-            activeView: 'standings',
-            sortField: 'winPct',
-            sortDir: 'desc'
+            activeView: 'standings'
         };
 
         window.onload = function() {
@@ -556,7 +344,6 @@
                         appState.teams = parsed.teams;
                         appState.games = parsed.games;
                         appState.bracketScores = parsed.bracketScores || {};
-                        showToast("Loaded encoded URL state!");
                     } else loadLocalStorage();
                 } catch (e) { loadLocalStorage(); }
             } else loadLocalStorage();
@@ -588,15 +375,6 @@
             localStorage.setItem('putnam_bracket', JSON.stringify(appState.bracketScores));
         }
 
-        function loadDemoData() {
-            appState.teams = JSON.parse(JSON.stringify(DEFAULT_TEAMS));
-            appState.games = JSON.parse(JSON.stringify(DEFAULT_GAMES));
-            appState.bracketScores = {};
-            saveLocalStorage();
-            renderAll();
-            showToast("Preloaded Week 1 & 2 games!");
-        }
-
         function shareLeagueURL() {
             const dataToShare = { teams: appState.teams, games: appState.games, bracketScores: appState.bracketScores };
             const compressed = LZString.compressToEncodedURIComponent(JSON.stringify(dataToShare));
@@ -609,54 +387,18 @@
             document.execCommand('copy');
             document.body.removeChild(tempInput);
 
-            showToast("Share URL copied to clipboard!");
-        }
-
-        function exportJSON() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ teams: appState.teams, games: appState.games, bracketScores: appState.bracketScores }, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `putnam_4th_5th_girls_season.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-            showToast("Exported JSON data!");
-        }
-
-        function importJSON(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const parsed = JSON.parse(e.target.result);
-                    if (parsed.teams && parsed.games) {
-                        appState.teams = parsed.teams;
-                        appState.games = parsed.games;
-                        appState.bracketScores = parsed.bracketScores || {};
-                        saveLocalStorage();
-                        renderAll();
-                        showToast("Imported league dataset!");
-                    }
-                } catch (err) { alert("Invalid JSON format."); }
-            };
-            reader.readAsText(file);
+            showToast("Share link copied!");
         }
 
         function calculateStandings() {
             let statsMap = {};
             appState.teams.forEach(team => {
                 statsMap[team.id] = {
-                    ...team,
-                    wins: 0, losses: 0, winPct: 0, pf: 0, pa: 0, diff: 0, streak: [], headToHead: {}
+                    ...team, wins: 0, losses: 0, winPct: 0, pf: 0, pa: 0, diff: 0, streak: [], headToHead: {}
                 };
             });
 
-            const filteredGames = appState.games.filter(g => 
-                appState.selectedWeek === 'All' || g.week == appState.selectedWeek
-            );
-
+            const filteredGames = appState.games.filter(g => appState.selectedWeek === 'All' || g.week == appState.selectedWeek);
             const sortedGames = [...filteredGames].sort((a, b) => a.week - b.week);
 
             sortedGames.forEach(game => {
@@ -664,10 +406,8 @@
                 const away = statsMap[game.awayId];
 
                 if (home && away) {
-                    home.pf += game.homeScore;
-                    home.pa += game.awayScore;
-                    away.pf += game.awayScore;
-                    away.pa += game.homeScore;
+                    home.pf += game.homeScore; home.pa += game.awayScore;
+                    away.pf += game.awayScore; away.pa += game.homeScore;
 
                     if (game.homeScore > game.awayScore) {
                         home.wins += 1; away.losses += 1;
@@ -687,7 +427,7 @@
                 const totalPlayed = team.wins + team.losses;
                 team.winPct = totalPlayed > 0 ? (team.wins / totalPlayed) : 0;
                 team.diff = team.pf - team.pa;
-                
+
                 if (team.streak.length === 0) team.streakText = '-';
                 else {
                     const lastResult = team.streak[team.streak.length - 1];
@@ -702,23 +442,11 @@
             });
 
             standings.sort((a, b) => {
-                let comp = 0;
-                if (appState.sortField === 'winPct') {
-                    comp = b.winPct - a.winPct;
-                    if (comp === 0) {
-                        const h2h = a.headToHead[b.id] || 0;
-                        if (h2h !== 0) return h2h > 0 ? -1 : 1;
-                        if (b.diff !== a.diff) return b.diff - a.diff;
-                        return b.pf - a.pf;
-                    }
-                } else if (appState.sortField === 'wins') comp = b.wins - a.wins;
-                else if (appState.sortField === 'losses') comp = a.losses - b.losses;
-                else if (appState.sortField === 'diff') comp = b.diff - a.diff;
-                else if (appState.sortField === 'pf') comp = b.pf - a.pf;
-                else if (appState.sortField === 'pa') comp = a.pa - b.pa;
-                else if (appState.sortField === 'name') comp = a.name.localeCompare(b.name);
-
-                return appState.sortDir === 'desc' ? comp : -comp;
+                if (b.winPct !== a.winPct) return b.winPct - a.winPct;
+                const h2h = a.headToHead[b.id] || 0;
+                if (h2h !== 0) return h2h > 0 ? -1 : 1;
+                if (b.diff !== a.diff) return b.diff - a.diff;
+                return b.pf - a.pf;
             });
 
             return standings;
@@ -726,9 +454,8 @@
 
         function renderAll() {
             renderWeekPills();
-            renderStatsOverview();
-            renderStandingsTable();
-            renderGamesTable();
+            renderStandingsCards();
+            renderGamesList();
             renderTeamsGrid();
             renderTournamentBracket();
             lucide.createIcons();
@@ -739,10 +466,10 @@
             const container = document.getElementById('weekTabs');
             container.innerHTML = weeks.map(w => {
                 const isActive = String(appState.selectedWeek) === String(w);
-                const label = w === 'All' ? 'All Weeks' : w === '9' ? 'W9 Tournament' : 'W' + w;
+                const label = w === 'All' ? 'All Weeks' : w === '9' ? 'Dec 18-20' : 'W' + w;
                 return `
-                    <button onclick="setWeek('${w}')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
-                        isActive ? 'bg-white text-orange-600 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900'
+                    <button onclick="setWeek('${w}')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                        isActive ? 'bg-purple-600 text-white shadow-md shadow-purple-900/40' : 'bg-brand-card text-slate-400 border border-brand-border'
                     }">
                         ${label}
                     </button>
@@ -750,244 +477,143 @@
             }).join('');
 
             document.getElementById('activeWeekBadge').textContent = 
-                appState.selectedWeek === 'All' ? 'All Regular Season Games' : 
-                appState.selectedWeek === '9' ? 'Week 9 Tournament (Dec 18–20)' : `Week ${appState.selectedWeek} Only`;
+                appState.selectedWeek === 'All' ? 'All Weeks' : appState.selectedWeek === '9' ? 'Dec 18-20 Tournament' : `Week ${appState.selectedWeek}`;
         }
 
-        function renderStatsOverview() {
+        function renderStandingsCards() {
             const standings = calculateStandings();
-            document.getElementById('statTotalTeams').textContent = appState.teams.length;
-            document.getElementById('statGamesPlayed').textContent = appState.games.length;
-            document.getElementById('statTopTeam').textContent = standings.length > 0 ? standings[0].name : 'N/A';
-        }
+            const container = document.getElementById('standingsCards');
 
-        function renderStandingsTable() {
-            const standings = calculateStandings();
-            const tbody = document.getElementById('standingsTableBody');
-            const emptyState = document.getElementById('emptyStandingsState');
-
-            if (standings.length === 0) {
-                tbody.innerHTML = '';
-                emptyState.classList.remove('hidden');
-                return;
-            }
-
-            emptyState.classList.add('hidden');
-            tbody.innerHTML = standings.map((team, index) => {
+            container.innerHTML = standings.map((team, index) => {
                 const rank = index + 1;
-                const winPctFormatted = team.winPct.toFixed(3).replace(/^0/, '');
-                
-                let diffBadge = 'text-slate-600';
-                if (team.diff > 0) diffBadge = 'text-emerald-600 font-bold';
-                else if (team.diff < 0) diffBadge = 'text-rose-500';
-
-                let streakStyle = 'bg-slate-100 text-slate-600';
-                if (team.streakText.startsWith('W')) streakStyle = 'bg-emerald-100 text-emerald-700 font-bold';
-                else if (team.streakText.startsWith('L')) streakStyle = 'bg-rose-100 text-rose-700';
-
-                const primaryColor = team.color || '#F97316';
+                const primaryColor = team.color || '#9333EA';
                 const darkerColor = adjustColorShade(primaryColor, -25);
                 const textCol = team.textColor || '#FFFFFF';
 
+                const streakBadgeClass = team.streakText.startsWith('W') 
+                    ? 'bg-emerald-950/80 text-emerald-400 border-emerald-800/60' 
+                    : team.streakText.startsWith('L') 
+                    ? 'bg-rose-950/80 text-rose-400 border-rose-800/60' 
+                    : 'bg-brand-dark text-slate-400 border-brand-border';
+
                 return `
-                    <tr class="hover:bg-slate-50/80 transition-colors">
-                        <td class="py-3.5 px-4 text-center">
-                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-extrabold ${
-                                rank === 1 ? 'bg-amber-100 text-amber-700 ring-2 ring-amber-300' :
-                                rank === 2 ? 'bg-slate-200 text-slate-700' :
-                                rank === 3 ? 'bg-amber-800/10 text-amber-900' : 'text-slate-500'
-                            }">
-                                ${rank}
+                    <div class="bg-brand-card rounded-2xl p-3.5 border border-brand-border shadow-md flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 text-center text-xs font-extrabold ${rank === 1 ? 'text-amber-400' : rank === 2 ? 'text-slate-300' : rank === 3 ? 'text-amber-600' : 'text-slate-500'}">
+                                #${rank}
                             </span>
-                        </td>
-                        <td class="py-3.5 px-4 font-bold text-slate-800 flex items-center gap-2.5">
-                            <span class="px-3 py-1 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1.5" style="background: linear-gradient(135deg, ${primaryColor} 0%, ${darkerColor} 100%); color: ${textCol};">
+
+                            <span class="px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm" style="background: linear-gradient(135deg, ${primaryColor} 0%, ${darkerColor} 100%); color: ${textCol};">
                                 ${team.name}
                             </span>
-                        </td>
-                        <td class="py-3.5 px-3 text-center text-slate-800 font-bold">${team.wins}</td>
-                        <td class="py-3.5 px-3 text-center text-slate-500">${team.losses}</td>
-                        <td class="py-3.5 px-3 text-center font-extrabold text-slate-900">${winPctFormatted}</td>
-                        <td class="py-3.5 px-3 text-center text-slate-600">${team.pf}</td>
-                        <td class="py-3.5 px-3 text-center text-slate-600">${team.pa}</td>
-                        <td class="py-3.5 px-3 text-center ${diffBadge}">${team.diff > 0 ? '+' : ''}${team.diff}</td>
-                        <td class="py-3.5 px-4 text-center">
-                            <span class="inline-block px-2.5 py-0.5 text-xs rounded-md ${streakStyle}">${team.streakText}</span>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function renderGamesTable() {
-            const tbody = document.getElementById('gamesTableBody');
-            const emptyState = document.getElementById('emptyGamesState');
-
-            let filteredGames = appState.games.filter(g => 
-                appState.selectedWeek === 'All' || g.week == appState.selectedWeek
-            );
-
-            filteredGames.sort((a, b) => b.week - a.week);
-
-            if (filteredGames.length === 0) {
-                tbody.innerHTML = '';
-                emptyState.classList.remove('hidden');
-                return;
-            }
-
-            emptyState.classList.add('hidden');
-            tbody.innerHTML = filteredGames.map(game => {
-                const homeTeam = appState.teams.find(t => t.id === game.homeId) || { name: 'Unknown', color: '#94a3b8', textColor: '#FFFFFF' };
-                const awayTeam = appState.teams.find(t => t.id === game.awayId) || { name: 'Unknown', color: '#94a3b8', textColor: '#FFFFFF' };
-
-                const homeWin = game.homeScore > game.awayScore;
-                const awayWin = game.awayScore > game.homeScore;
-
-                const homeDarker = adjustColorShade(homeTeam.color || '#94a3b8', -25);
-                const awayDarker = adjustColorShade(awayTeam.color || '#94a3b8', -25);
-
-                return `
-                    <tr class="hover:bg-slate-50/80 transition-colors">
-                        <td class="py-3 px-4 text-xs font-bold text-orange-600">
-                            <span class="bg-orange-50 px-2 py-1 rounded-lg border border-orange-200">Week ${game.week}</span>
-                        </td>
-                        <td class="py-3 px-4 font-semibold ${homeWin ? 'text-slate-900 font-extrabold' : 'text-slate-600'}">
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold border border-black/10 mr-1.5 shadow-sm" style="background: linear-gradient(135deg, ${homeTeam.color} 0%, ${homeDarker} 100%); color: ${homeTeam.textColor || '#FFFFFF'}">
-                                ${homeTeam.name}
-                            </span>
-                        </td>
-                        <td class="py-3 px-4 text-center font-mono font-bold text-slate-800 bg-slate-50/50 rounded-lg">
-                            <span class="${homeWin ? 'text-orange-600 font-extrabold' : ''}">${game.homeScore}</span>
-                            <span class="text-slate-300 mx-1.5">-</span>
-                            <span class="${awayWin ? 'text-orange-600 font-extrabold' : ''}">${game.awayScore}</span>
-                        </td>
-                        <td class="py-3 px-4 font-semibold ${awayWin ? 'text-slate-900 font-extrabold' : 'text-slate-600'}">
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold border border-black/10 mr-1.5 shadow-sm" style="background: linear-gradient(135deg, ${awayTeam.color} 0%, ${awayDarker} 100%); color: ${awayTeam.textColor || '#FFFFFF'}">
-                                ${awayTeam.name}
-                            </span>
-                        </td>
-                        <td class="py-3 px-4 text-right no-print">
-                            <div class="flex items-center justify-end gap-1">
-                                <button onclick="editGame('${game.id}')" class="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                                    <i data-lucide="edit-2" class="w-4 h-4"></i>
-                                </button>
-                                <button onclick="deleteGame('${game.id}')" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function renderTeamsGrid() {
-            const grid = document.getElementById('teamsGrid');
-
-            if (appState.teams.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center text-slate-400 py-8">No teams added yet.</p>`;
-                return;
-            }
-
-            grid.innerHTML = appState.teams.map(team => {
-                const gamesPlayed = appState.games.filter(g => g.homeId === team.id || g.awayId === team.id).length;
-                const primaryColor = team.color || '#F97316';
-                const darkerColor = adjustColorShade(primaryColor, -25);
-                const textCol = team.textColor || '#FFFFFF';
-
-                return `
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between hover:shadow-md transition-shadow">
-                        <div class="flex items-center gap-3.5">
-                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center font-extrabold text-xl shadow-md border border-black/10" style="background: linear-gradient(135deg, ${primaryColor} 0%, ${darkerColor} 100%); color: ${textCol};">
-                                ${team.name.charAt(0)}
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-slate-800 text-base">${team.name}</h3>
-                                <p class="text-xs text-slate-400 font-medium">${gamesPlayed} Games Played</p>
-                            </div>
                         </div>
-                        <div class="flex items-center gap-1 no-print">
-                            <button onclick="editTeam('${team.id}')" class="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors">
-                                <i data-lucide="edit-3" class="w-4 h-4"></i>
-                            </button>
-                            <button onclick="deleteTeam('${team.id}')" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors">
-                                <i data-lucide="trash" class="w-4 h-4"></i>
-                            </button>
+
+                        <!-- Stats Grid: W-L, PCT, DIFF, PF, PA, Streak -->
+                        <div class="flex items-center gap-3 text-right">
+                            <div>
+                                <div class="text-xs font-extrabold text-white">${team.wins}-${team.losses}</div>
+                                <div class="text-[10px] font-semibold text-purple-400">${team.winPct.toFixed(3).replace(/^0/, '')}</div>
+                            </div>
+
+                            <div class="border-l border-brand-border pl-2.5">
+                                <div class="text-[10px] text-slate-400 font-medium">PF <span class="text-white font-bold">${team.pf}</span></div>
+                                <div class="text-[10px] text-slate-400 font-medium">PA <span class="text-white font-bold">${team.pa}</span></div>
+                            </div>
+
+                            <div class="border-l border-brand-border pl-2.5 flex flex-col items-end">
+                                <div class="text-xs font-bold ${team.diff > 0 ? 'text-emerald-400' : team.diff < 0 ? 'text-rose-400' : 'text-slate-400'}">
+                                    ${team.diff > 0 ? '+' : ''}${team.diff}
+                                </div>
+                                <span class="mt-0.5 text-[9px] font-bold px-1.5 py-0.2 rounded border ${streakBadgeClass}">
+                                    ${team.streakText}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        // Bracket Logic
+        function renderGamesList() {
+            const container = document.getElementById('gamesList');
+            let filteredGames = appState.games.filter(g => appState.selectedWeek === 'All' || g.week == appState.selectedWeek);
+            filteredGames.sort((a, b) => b.week - a.week);
+
+            if (filteredGames.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-500 py-6 text-xs">No games recorded yet.</p>`;
+                return;
+            }
+
+            container.innerHTML = filteredGames.map(game => {
+                const home = appState.teams.find(t => t.id === game.homeId) || { name: 'Unknown' };
+                const away = appState.teams.find(t => t.id === game.awayId) || { name: 'Unknown' };
+
+                return `
+                    <div class="bg-brand-card p-3 rounded-xl border border-brand-border flex items-center justify-between text-xs">
+                        <span class="text-[10px] font-bold text-purple-400 bg-purple-950/60 border border-purple-800/40 px-2 py-0.5 rounded-md">W${game.week}</span>
+                        <div class="flex items-center gap-2 font-bold text-white">
+                            <span>${home.name}</span>
+                            <span class="bg-brand-dark px-2.5 py-1 rounded-lg text-purple-300 font-mono">${game.homeScore} - ${game.awayScore}</span>
+                            <span>${away.name}</span>
+                        </div>
+                        <button onclick="deleteGame('${game.id}')" class="text-slate-500 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderTeamsGrid() {
+            const container = document.getElementById('teamsGrid');
+            container.innerHTML = appState.teams.map(team => {
+                const primaryColor = team.color || '#9333EA';
+                const darkerColor = adjustColorShade(primaryColor, -25);
+                const textCol = team.textColor || '#FFFFFF';
+
+                return `
+                    <div class="bg-brand-card p-3.5 rounded-2xl border border-brand-border flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center font-extrabold text-sm" style="background: linear-gradient(135deg, ${primaryColor} 0%, ${darkerColor} 100%); color: ${textCol};">
+                                ${team.name.charAt(0)}
+                            </div>
+                            <span class="font-bold text-white text-sm">${team.name}</span>
+                        </div>
+                        <span class="text-xs text-slate-400">${appState.games.filter(g => g.homeId === team.id || g.awayId === team.id).length} Matches</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
         function renderTournamentBracket() {
             const standings = calculateStandings();
             const getTeam = (index) => standings[index] ? standings[index].name : `Seed #${index + 1}`;
 
-            // Seed 1 BYE
-            const t1 = getTeam(0);
-            document.getElementById('b1_t1').textContent = `#1 ${t1} (Bye)`;
+            document.getElementById('b1_t1').textContent = `#1 ${getTeam(0)} (Bye)`;
+            document.getElementById('b1_mB_h_name').textContent = `#4 ${getTeam(3)}`;
+            document.getElementById('b1_mB_a_name').textContent = `#5 ${getTeam(4)}`;
+            document.getElementById('b1_mC_h_name').textContent = `#2 ${getTeam(1)}`;
+            document.getElementById('b1_mC_a_name').textContent = `#7 ${getTeam(6)}`;
+            document.getElementById('b1_mD_h_name').textContent = `#3 ${getTeam(2)}`;
+            document.getElementById('b1_mD_a_name').textContent = `#6 ${getTeam(5)}`;
 
-            // Quarterfinals Seeding (4 vs 5, 2 vs 7, 3 vs 6)
-            const t4 = getTeam(3), t5 = getTeam(4);
-            const t2 = getTeam(1), t7 = getTeam(6);
-            const t3 = getTeam(2), t6 = getTeam(5);
-
-            document.getElementById('b1_mB_h_name').textContent = `#4 ${t4}`;
-            document.getElementById('b1_mB_a_name').textContent = `#5 ${t5}`;
-
-            document.getElementById('b1_mC_h_name').textContent = `#2 ${t2}`;
-            document.getElementById('b1_mC_a_name').textContent = `#7 ${t7}`;
-
-            document.getElementById('b1_mD_h_name').textContent = `#3 ${t3}`;
-            document.getElementById('b1_mD_a_name').textContent = `#6 ${t6}`;
-
-            // Load saved bracket scores & compute winners
             const b = appState.bracketScores;
+            const winB = (parseInt(b['mB_home']||0) > parseInt(b['mB_away']||0)) ? getTeam(3) : (parseInt(b['mB_away']||0) > parseInt(b['mB_home']||0)) ? getTeam(4) : 'Winner B';
+            const winC = (parseInt(b['mC_home']||0) > parseInt(b['mC_away']||0)) ? getTeam(1) : (parseInt(b['mC_away']||0) > parseInt(b['mC_home']||0)) ? getTeam(6) : 'Winner C';
+            const winD = (parseInt(b['mD_home']||0) > parseInt(b['mD_away']||0)) ? getTeam(2) : (parseInt(b['mD_away']||0) > parseInt(b['mD_home']||0)) ? getTeam(5) : 'Winner D';
 
-            // Match B winner
-            const mB_hs = parseInt(b['mB_home'] || 0, 10);
-            const mB_as = parseInt(b['mB_away'] || 0, 10);
-            let winB = mB_hs > mB_as ? `#4 ${t4}` : mB_as > mB_hs ? `#5 ${t5}` : 'Winner Match B';
-
-            // Match C winner
-            const mC_hs = parseInt(b['mC_home'] || 0, 10);
-            const mC_as = parseInt(b['mC_away'] || 0, 10);
-            let winC = mC_hs > mC_as ? `#2 ${t2}` : mC_as > mC_hs ? `#7 ${t7}` : 'Winner Match C';
-
-            // Match D winner
-            const mD_hs = parseInt(b['mD_home'] || 0, 10);
-            const mD_as = parseInt(b['mD_away'] || 0, 10);
-            let winD = mD_hs > mD_as ? `#3 ${t3}` : mD_as > mD_hs ? `#6 ${t6}` : 'Winner Match D';
-
-            // Semifinals Teams
-            document.getElementById('b2_sf1_h_name').textContent = `#1 ${t1}`;
+            document.getElementById('b2_sf1_h_name').textContent = `#1 ${getTeam(0)}`;
             document.getElementById('b2_sf1_a_name').textContent = winB;
-
             document.getElementById('b2_sf2_h_name').textContent = winC;
             document.getElementById('b2_sf2_a_name').textContent = winD;
 
-            // Semifinal Winners
-            const sf1_hs = parseInt(b['sf1_home'] || 0, 10);
-            const sf1_as = parseInt(b['sf1_away'] || 0, 10);
-            let winSF1 = sf1_hs > sf1_as ? `#1 ${t1}` : sf1_as > sf1_hs ? winB : 'Winner SF1';
+            const winSF1 = (parseInt(b['sf1_home']||0) > parseInt(b['sf1_away']||0)) ? getTeam(0) : (parseInt(b['sf1_away']||0) > parseInt(b['sf1_home']||0)) ? winB : 'Winner SF1';
+            const winSF2 = (parseInt(b['sf2_home']||0) > parseInt(b['sf2_away']||0)) ? winC : (parseInt(b['sf2_away']||0) > parseInt(b['sf2_home']||0)) ? winD : 'Winner SF2';
 
-            const sf2_hs = parseInt(b['sf2_home'] || 0, 10);
-            const sf2_as = parseInt(b['sf2_away'] || 0, 10);
-            let winSF2 = sf2_hs > sf2_as ? winC : sf2_as > sf2_hs ? winD : 'Winner SF2';
-
-            // Championship Teams
             document.getElementById('b3_f_h_name').textContent = winSF1;
             document.getElementById('b3_f_a_name').textContent = winSF2;
 
-            // Champion
-            const f_hs = parseInt(b['f_home'] || 0, 10);
-            const f_as = parseInt(b['f_away'] || 0, 10);
-            let champ = f_hs > f_as ? winSF1 : f_as > f_hs ? winSF2 : 'TBD';
-
+            const champ = (parseInt(b['f_home']||0) > parseInt(b['f_away']||0)) ? winSF1 : (parseInt(b['f_away']||0) > parseInt(b['f_home']||0)) ? winSF2 : 'TBD';
             document.getElementById('championName').textContent = champ;
 
-            // Fill input score fields
             ['mB_home', 'mB_away', 'mC_home', 'mC_away', 'mD_home', 'mD_away', 'sf1_home', 'sf1_away', 'sf2_home', 'sf2_away', 'f_home', 'f_away'].forEach(key => {
                 const el = document.getElementById(`b${key.startsWith('m') ? '1' : key.startsWith('s') ? '2' : '3'}_${key}_score`);
                 if (el && b[key] !== undefined) el.value = b[key];
@@ -1002,153 +628,9 @@
 
         function reseedTournament() {
             renderTournamentBracket();
-            showToast("Tournament re-seeded from regular season standings!");
+            showToast("Bracket reseeded!");
         }
 
         function switchView(view) {
             appState.activeView = view;
-            document.getElementById('viewStandings').classList.toggle('hidden', view !== 'standings');
-            document.getElementById('viewGames').classList.toggle('hidden', view !== 'games');
-            document.getElementById('viewBracket').classList.toggle('hidden', view !== 'bracket');
-            document.getElementById('viewTeams').classList.toggle('hidden', view !== 'teams');
-
-            const activeClass = "bg-white shadow-sm text-slate-800 font-semibold";
-            const inactiveClass = "text-slate-600 hover:text-slate-900";
-
-            ['standings', 'games', 'bracket', 'teams'].forEach(v => {
-                const btn = document.getElementById(`view${v.charAt(0).toUpperCase() + v.slice(1)}Btn`);
-                btn.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${v === view ? activeClass : inactiveClass}`;
-            });
-        }
-
-        function setWeek(w) {
-            appState.selectedWeek = w;
-            renderAll();
-        }
-
-        function setSort(field) {
-            if (appState.sortField === field) appState.sortDir = appState.sortDir === 'desc' ? 'asc' : 'desc';
-            else { appState.sortField = field; appState.sortDir = 'desc'; }
-            renderStandingsTable();
-        }
-
-        function openModal(id) {
-            if (id === 'addGameModal') updateGameTeamOptions();
-            document.getElementById(id).classList.remove('hidden');
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-        }
-
-        function updateGameTeamOptions() {
-            const homeSelect = document.getElementById('homeTeamSelect');
-            const awaySelect = document.getElementById('awayTeamSelect');
-
-            const optionsHTML = appState.teams.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
-            homeSelect.innerHTML = optionsHTML;
-            awaySelect.innerHTML = optionsHTML;
-
-            if (appState.teams.length > 1) awaySelect.selectedIndex = 1;
-        }
-
-        function handleSaveTeam(e) {
-            e.preventDefault();
-            const id = document.getElementById('editTeamId').value;
-            const name = document.getElementById('teamNameInput').value.trim();
-            const color = document.getElementById('teamColorInput').value;
-
-            if (!name) return;
-
-            if (id) {
-                const idx = appState.teams.findIndex(t => t.id === id);
-                if (idx !== -1) appState.teams[idx] = { ...appState.teams[idx], name, color };
-            } else {
-                appState.teams.push({ id: 't_' + Date.now(), name, color, textColor: '#FFFFFF' });
-            }
-
-            saveLocalStorage();
-            closeModal('addTeamModal');
-            renderAll();
-            showToast("Team saved!");
-        }
-
-        function editTeam(id) {
-            const team = appState.teams.find(t => t.id === id);
-            if (!team) return;
-
-            document.getElementById('editTeamId').value = team.id;
-            document.getElementById('teamNameInput').value = team.name;
-            document.getElementById('teamColorInput').value = team.color || '#9333EA';
-            openModal('addTeamModal');
-        }
-
-        function deleteTeam(id) {
-            if (confirm('Delete team and associated games?')) {
-                appState.teams = appState.teams.filter(t => t.id !== id);
-                appState.games = appState.games.filter(g => g.homeId !== id && g.awayId !== id);
-                saveLocalStorage();
-                renderAll();
-                showToast("Team deleted.");
-            }
-        }
-
-        function handleSaveGame(e) {
-            e.preventDefault();
-            const id = document.getElementById('editGameId').value;
-            const week = parseInt(document.getElementById('gameWeekInput').value, 10);
-            const homeId = document.getElementById('homeTeamSelect').value;
-            const awayId = document.getElementById('awayTeamSelect').value;
-            const homeScore = parseInt(document.getElementById('homeScoreInput').value, 10);
-            const awayScore = parseInt(document.getElementById('awayScoreInput').value, 10);
-
-            if (homeId === awayId) {
-                alert('Please pick two different teams.');
-                return;
-            }
-
-            if (id) {
-                const idx = appState.games.findIndex(g => g.id === id);
-                if (idx !== -1) appState.games[idx] = { id, week, homeId, awayId, homeScore, awayScore };
-            } else {
-                appState.games.push({ id: 'g_' + Date.now(), week, homeId, awayId, homeScore, awayScore });
-            }
-
-            saveLocalStorage();
-            closeModal('addGameModal');
-            renderAll();
-            showToast("Game result saved!");
-        }
-
-        function editGame(id) {
-            const game = appState.games.find(g => g.id === id);
-            if (!game) return;
-
-            openModal('addGameModal');
-            document.getElementById('editGameId').value = game.id;
-            document.getElementById('gameWeekInput').value = game.week;
-            updateGameTeamOptions();
-            document.getElementById('homeTeamSelect').value = game.homeId;
-            document.getElementById('awayTeamSelect').value = game.awayId;
-            document.getElementById('homeScoreInput').value = game.homeScore;
-            document.getElementById('awayScoreInput').value = game.awayScore;
-        }
-
-        function deleteGame(id) {
-            if (confirm('Delete this game result?')) {
-                appState.games = appState.games.filter(g => g.id !== id);
-                saveLocalStorage();
-                renderAll();
-                showToast("Game deleted.");
-            }
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMessage').textContent = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
-        }
-    </script>
-</body>
-</html>
+            ['Standings', 'Games
